@@ -1,6 +1,6 @@
 
 #Natural Computing - Assignment 1 - Question 4
-#Sven Berberich, Thijs Schoppema en Gerhard van der Knijff
+#Sven Berberich, Thijs Schoppema & Gerhard van der Knijff
 
 #Imports
 from bitarray import bitarray
@@ -50,8 +50,8 @@ def plotResults(runNumber):
     plt.plot(iterationsArray, fitnessArray, color=COLORS[runNumber])
     plt.xlabel("Iterations")
     plt.ylabel("Best fitness")
-    plt.xlim([0, 1500])
-    plt.ylim([0,100])
+    plt.xlim([0, ITERATIONS])
+    plt.ylim([0, LENGTH])
 
 def runA():
     runAlgorithm()
