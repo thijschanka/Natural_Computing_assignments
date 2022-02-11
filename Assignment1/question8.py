@@ -42,7 +42,6 @@ functions = ['add', 'sub', 'mul', 'div', 'log', exp_fun, 'sin', 'cos']
 sae_fitness = make_fitness(function=lambda y, y_pred, w: -np.sum(np.abs(np.array(y) - np.array(y_pred)) * w),
                            greater_is_better=True)
 
-terminals = ...
 
 gp = SymbolicRegressor(population_size=1000,
                        generations=50,
