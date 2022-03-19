@@ -5,7 +5,7 @@ from matplotlib import pyplot
 anomalyScores = []
 classes = []
 
-with open("c:/Users/gerha/OneDrive/Natural Computing/Assignment 4/negative-selection/output.txt") as english_file:
+with open("output.txt") as english_file:
     englishScores = english_file.readlines()
     for score in englishScores:
         if not score.isspace():
@@ -13,7 +13,7 @@ with open("c:/Users/gerha/OneDrive/Natural Computing/Assignment 4/negative-selec
             anomalyScores.append(float(score))
 
 
-with open("c:/Users/gerha/OneDrive/Natural Computing/Assignment 4/negative-selection/output2.txt") as anomaly_file:
+with open("output2.txt") as anomaly_file:
     otherLanguageScores = anomaly_file.readlines()
     for score in otherLanguageScores:
         if not score.isspace():
