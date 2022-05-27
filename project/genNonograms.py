@@ -21,7 +21,7 @@ def main(pbn = None, local_puzzle = True, out_dir="Puzzles/generated/local"):
             for f in pbn:
                 print("Process puzzle:", f)
                 puzzle = subprocess.run(["pynogram", f"--pbn={str(f)}", "--max-depth", "1", "--max-solutions", "1", "--draw-final", "--timeout", "1",], stdout=subprocess.PIPE)
-                build_json(out_dir / str(pbn), puzzle.stdout.decode('utf-8'))
+                build_json(out_dir / str(f), puzzle.stdout.decode('utf-8'))
         else:
             print("Process puzzle:", pbn)
             puzzle = subprocess.run(["pynogram", f"--pbn={str(pbn)}", "--max-depth", "1", "--max-solutions", "1", "--draw-final", "--timeout", "1",], stdout=subprocess.PIPE)
@@ -66,5 +66,5 @@ def build_json(out_dir, puzzle_str):
         json.dump(puzzle_json, f)
         
 if __name__ == "__main__":
-    #main(pbn = [3, 4], local_puzzle = False, out_dir="Puzzles/generated/pbn")
+    main(pbn = [3, 4], local_puzzle = False, out_dir="Puzzles/generated/pbn")
     main()
