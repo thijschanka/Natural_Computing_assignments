@@ -28,14 +28,12 @@ def process_puzzle(path) -> None:
 def main():
     if len(sys.argv) < 2 or \
        any(help_command in sys.argv for help_command in ["--help", "-h", "-?"]):
-        print("asdf")
         return
 
     puzzles = len(sys.argv) - 1
     for index, path in enumerate(sys.argv[1:]):
         print("Processing puzzle {} of {}".format(index + 1, puzzles))
-        #process_puzzle(path)
-        
+
         puzzle = NonoGram(path)
         print(puzzle.getResults())
         print(puzzle.getHints())
