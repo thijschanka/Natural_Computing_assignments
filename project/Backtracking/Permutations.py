@@ -1,5 +1,5 @@
-from PuzzleState import PuzzleState as State
-from Constraints import Constraints    
+from Backtracking.PuzzleState import PuzzleState as State
+from Backtracking.Constraints import Constraints    
     
 class Permutations:
     def __init__(self, constraints):

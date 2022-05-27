@@ -1,4 +1,4 @@
-from Constraints import Constraints
+from Backtracking.Constraints import Constraints
 
 class PuzzleState:
     EMPTY = False
@@ -18,7 +18,10 @@ class PuzzleState:
 
     def get(self, row, column):
         return self._state[row][column]
-
+    
+    def get_constraints(self):
+        return self.constraints
+    
     def __str__(self):
         return "\n".join(
             [ "┌" + "".join('─' for _ in range(self.constraints.width)) + "┐" ] + \

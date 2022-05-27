@@ -1,6 +1,6 @@
-from PuzzleState import PuzzleState as State
-from Constraints import Constraints
-from Permutations import Permutations
+from Backtracking.PuzzleState import PuzzleState as State
+from Backtracking.Constraints import Constraints
+from Backtracking.Permutations import Permutations
 import copy
 import time
 
