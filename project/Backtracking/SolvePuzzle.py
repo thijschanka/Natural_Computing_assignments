@@ -3,7 +3,7 @@ import sys
 import os
 import json
 from Constraints import Constraints
-from project.PSOSolver import PSOSolver as Solver
+from PuzzleSolver import PuzzleSolver as Solver
 from PuzzleState import PuzzleState as State
 
 def process_puzzle(path) -> None:

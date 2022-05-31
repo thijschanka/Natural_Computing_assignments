@@ -89,4 +89,3 @@ class PSOSolver:
                 puzzle.set(row, col, 0 if round(rep[row, col]) < 1 else 1)
 
         return puzzle
-
