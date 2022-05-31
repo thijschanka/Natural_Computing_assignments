@@ -7,13 +7,9 @@ from numpy import ndarray
 from project.Backtracking.PuzzleState import PuzzleState
 
 
-def error_function(particle: ndarray) -> float:
+def error_function(state: PuzzleState) -> float:
     # TODO find a proper error_function
-    target = np.ones(particle.shape)
-
-    error = target - particle
-
-    return np.mean(error ** 2)
+    return state.constraint_violations()
 
 
 class PSOSolver:
@@ -48,7 +44,7 @@ class PSOSolver:
             # Calculate error for each particle
             for p in range(n_particles):
                 # Compute error
-                error = error_function(particles[p])
+                error = error_function(self.__from_representation(particles[p]))
 
                 # Update local best errors and particles
                 if error < best_local_error[p]:

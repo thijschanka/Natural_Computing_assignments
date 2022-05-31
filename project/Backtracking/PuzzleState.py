@@ -1,4 +1,5 @@
 from Backtracking.Constraints import Constraints
+import numpy as np
 
 class PuzzleState:
     EMPTY = False
@@ -84,3 +85,13 @@ class PuzzleState:
                 return False
 
         return True # no errors were found so the state is valid
+
+
+
+    def constraint_violations(self) -> int:
+        state = np.array(self._state)
+
+        for i, col_constraint in enumerate(self.constraints.columns):
+            pass
+
+        raise NotImplementedError
