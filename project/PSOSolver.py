@@ -9,23 +9,27 @@ from project.Backtracking.PuzzleState import PuzzleState
 
 def error_function(particle: ndarray) -> float:
     # TODO find a proper error_function
-    return np.mean(np.rint(particle) ** 2)
+    target = np.ones(particle.shape)
+
+    error = target - particle
+
+    return np.mean(error ** 2)
 
 
 class PSOSolver:
     def __init__(self, constraints):
         self.constraints = constraints
 
-    def solve(self, n_particles: int = 4,
+    def solve(self, n_particles: int = 1000,
               iterations: int = 100,
-              w: float = 5,
+              w: float = 0.5,
               alpha1: float = 0.25,
               alpha2: float = 0.25) -> ...:
 
         height, width = self.constraints.height, self.constraints.width
 
         # Prepare variables
-        velocity = np.zeros((n_particles, height, width))
+        velocity = np.random.random((n_particles, height, width))
 
         best_local_error = np.zeros(n_particles)
         best_local_error[:] = sys.maxsize
@@ -66,8 +70,6 @@ class PSOSolver:
                               + alpha2 * r2 * (global_best_particle - particles[p])
 
                 particles[p] = particles[p] + velocity[p]
-
-            print(self.__from_representation(global_best_particle))
 
         self.end_time = time.perf_counter()
 
