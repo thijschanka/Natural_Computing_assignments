@@ -41,7 +41,7 @@ class NonoGram:
         solutions = solver.solve()
         self.brute_force_sol = solutions
 
-        self.geneticAlgorithmSolution = GeneticAlgorithm(instance, 10)
+        self.geneticAlgorithmSolutions = GeneticAlgorithm(instance, 20)
         
         first = True
         self.results = []
@@ -57,8 +57,10 @@ class NonoGram:
             self.results.append(result)
         
     def printSolutions(self):
+        print("Brute force solutions:")
         for i in self.brute_force_sol:
             print(i)
 
-        print("Genetic algorithm solution:")
-        print(self.geneticAlgorithmSolution)
+        print("Genetic algorithm solutions:")
+        for j in self.geneticAlgorithmSolutions:
+            print(j)

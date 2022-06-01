@@ -77,8 +77,8 @@ def mutation(population, constraints):
     return mutationPopulation
 
 def select(crossoverPopulation, mutationPopulation, populationSize):
-    crossoverPopulation = sorted(crossoverPopulation, key= lambda s : (fitness_function(s), random.random()), reverse=True)
-    mutationPopulation = sorted(mutationPopulation, key= lambda s : (fitness_function(s), random.random()), reverse=True)
+    crossoverPopulation = sorted(crossoverPopulation, key= lambda s : (fitness_function(s), random.random()), reverse=False)
+    mutationPopulation = sorted(mutationPopulation, key= lambda s : (fitness_function(s), random.random()), reverse=False)
 
     numberOfParents = int(2*populationSize/10)+1
     numberOfChildren = int(2*populationSize/10)+1
@@ -95,27 +95,31 @@ def converge(population):
 
     for solution in population:
         if fitness_function(solution) == 0:
-            print("Converged!")
+            print("Found solution!")
             return True
     
     for i in range(len(population)-1):
         if population[i].get_state() != population[i+1].get_state():
             return False
 
+    print("All solutions converged..")
     return True
 
 def best(population):
+    bestSolutions = []
     for solution in population:
         if fitness_function(solution) == 0:
-            return solution
+            bestSolutions += [solution]
     
-    return population[0]
+    if len(bestSolutions) > 0:
+        return bestSolutions
+    else:
+        return [population[0]]
 
 def  fitness_function(solution: PuzzleState) -> float:
     #TODO find a proper error_function
     target = np.ones([solution.constraints.width, solution.constraints.height])
     error = target - solution.get_state()
-    print("ERROR rate", error)
 
     return np.mean(error ** 2)
     
