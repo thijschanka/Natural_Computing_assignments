@@ -11,6 +11,8 @@ from Backtracking.Constraints import Constraints
 from Backtracking.PuzzleSolver import PuzzleSolver as Solver
 from Backtracking.PuzzleState import PuzzleState as State
 
+from EvolutionaryAlgorithm.EA import GeneticAlgorithm
+
 class NonoGram:
     def __init__(self, json_file = False):
         self.hints = None
@@ -38,6 +40,8 @@ class NonoGram:
         solver = Solver(instance)
         solutions = solver.solve()
         self.brute_force_sol = solutions
+
+        self.geneticAlgorithmSolution = GeneticAlgorithm(instance, 10)
         
         first = True
         self.results = []
@@ -55,3 +59,6 @@ class NonoGram:
     def printSolutions(self):
         for i in self.brute_force_sol:
             print(i)
+
+        print("Genetic algorithm solution:")
+        print(self.geneticAlgorithmSolution)

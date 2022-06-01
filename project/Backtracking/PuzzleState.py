@@ -18,6 +18,9 @@ class PuzzleState:
 
     def get(self, row, column):
         return self._state[row][column]
+
+    def get_state(self):
+        return self._state
     
     def get_constraints(self):
         return self.constraints
