@@ -18,9 +18,9 @@ def GeneticAlgorithm(constraints, populationSize):
         iterations += 1
         print("Iterations = ", iterations)
         print("Best fitness:", fitness_function(population[0]))
-        print(randomSolutions[0])
+        print(population[0])
 
-    return best(randomSolutions, constraints)
+    return best(population)
 
 def randomSolutions(constraints, populationSize):
     solutions = []
@@ -50,11 +50,11 @@ def crossover(population, constraints, populationSize):
         for i in range (constraints.height):
             for j in range(constraints.width):
                 if random.random() <= 0.5:
-                    child1.set(parent1.get(i,j), i, j)
-                    child2.set(parent2.get(i,j), i, j)
+                    child1.set(i,j, parent1.get(i,j))
+                    child2.set(i,j, parent2.get(i,j))
                 else:
-                    child1.set(parent2.get(i,j), i, j)
-                    child2.set(parent1.get(i,j), i, j)
+                    child1.set(i,j, parent2.get(i,j))
+                    child2.set(i,j, parent1.get(i,j))
         crossoverPopulation += [child1, child2]
     return crossoverPopulation
 
@@ -77,7 +77,6 @@ def mutation(population, constraints):
     return mutationPopulation
 
 def select(crossoverPopulation, mutationPopulation, populationSize):
-
     crossoverPopulation = sorted(crossoverPopulation, key= lambda s : (fitness_function(s), random.random()), reverse=True)
     mutationPopulation = sorted(mutationPopulation, key= lambda s : (fitness_function(s), random.random()), reverse=True)
 
@@ -96,6 +95,7 @@ def converge(population):
 
     for solution in population:
         if fitness_function(solution) == 0:
+            print("Converged!")
             return True
     
     for i in range(len(population)-1):
@@ -114,8 +114,8 @@ def best(population):
 def  fitness_function(solution: PuzzleState) -> float:
     #TODO find a proper error_function
     target = np.ones([solution.constraints.width, solution.constraints.height])
-
     error = target - solution.get_state()
+    print("ERROR rate", error)
 
     return np.mean(error ** 2)
     
