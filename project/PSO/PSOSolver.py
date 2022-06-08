@@ -1,5 +1,6 @@
 import sys
 import time
+from typing import Callable
 
 import numpy as np
 from numpy import ndarray
@@ -8,14 +9,10 @@ from tqdm import tqdm
 from project.Backtracking.PuzzleState import PuzzleState
 
 
-def error_function(state: PuzzleState) -> float:
-    # TODO find a proper error_function
-    return state.error_2()
-
-
 class PSOSolver:
-    def __init__(self, constraints):
+    def __init__(self, constraints, error_fun: Callable[[PuzzleState], float]):
         self.constraints = constraints
+        self.error_fun = error_fun
 
     def solve(self, n_particles: int = 1000,
               iterations: int = 100,
@@ -42,11 +39,11 @@ class PSOSolver:
 
         # Run iterations
 
-        for i in tqdm(range(iterations)):
+        for i in tqdm(range(iterations), desc="PSO solver progress"):
             # Calculate error for each particle
             for p in range(n_particles):
                 # Compute error
-                error = error_function(self.__from_representation(particles[p]))
+                error = self.error_fun(self.__from_representation(particles[p]))
 
                 # Update local best errors and particles
                 if error < best_local_error[p]:
@@ -68,7 +65,6 @@ class PSOSolver:
                               + alpha2 * r2 * (global_best_particle - particles[p])
 
                 particles[p] = particles[p] + velocity[p]
-
 
         self.end_time = time.perf_counter()
 

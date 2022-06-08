@@ -11,6 +11,7 @@ from Backtracking.Constraints import Constraints
 from Backtracking.PuzzleSolver import PuzzleSolver as Solver
 from Backtracking.PuzzleState import PuzzleState as State
 
+from PSO.PSOSolver import PSOSolver
 from EvolutionaryAlgorithm.EA import GeneticAlgorithm
 
 class NonoGram:
@@ -41,7 +42,10 @@ class NonoGram:
         solutions = solver.solve()
         self.brute_force_sol = solutions
 
+        error_fun = lambda s: s.error_2()
+
         self.geneticAlgorithmSolutions = GeneticAlgorithm(instance, 20)
+        self.psoSolutions = PSOSolver(instance, error_fun).solve()
         
         first = True
         self.results = []
@@ -64,3 +68,7 @@ class NonoGram:
         print("Genetic algorithm solutions:")
         for j in self.geneticAlgorithmSolutions:
             print(j)
+
+        print("PSO solutions:")
+        for k in self.psoSolutions:
+            print(k)

@@ -17,7 +17,7 @@ def GeneticAlgorithm(constraints, populationSize):
         global iterations
         iterations += 1
         print("Iterations = ", iterations)
-        print("Best fitness:", fitness_function(population[0]))
+        print("Best fitness:", error_function(population[0]))
         print(population[0])
 
     return best(population)
@@ -39,7 +39,7 @@ def randomSolutions(constraints, populationSize):
 def crossover(population, constraints, populationSize):
     crossoverPopulation = []
 
-    population = sorted(population, key = lambda s : (fitness_function(s), random.random()))
+    population = sorted(population, key = lambda s : (error_function(s), random.random()))
     n = (populationSize*(populationSize+1))/2
     prob = [i/n for i in range(1, populationSize+1)]
 
@@ -77,8 +77,8 @@ def mutation(population, constraints):
     return mutationPopulation
 
 def select(crossoverPopulation, mutationPopulation, populationSize):
-    crossoverPopulation = sorted(crossoverPopulation, key= lambda s : (fitness_function(s), random.random()), reverse=False)
-    mutationPopulation = sorted(mutationPopulation, key= lambda s : (fitness_function(s), random.random()), reverse=False)
+    crossoverPopulation = sorted(crossoverPopulation, key= lambda s : (error_function(s), random.random()), reverse=False)
+    mutationPopulation = sorted(mutationPopulation, key= lambda s : (error_function(s), random.random()), reverse=False)
 
     numberOfParents = int(2*populationSize/10)+1
     numberOfChildren = int(2*populationSize/10)+1
@@ -94,7 +94,7 @@ def select(crossoverPopulation, mutationPopulation, populationSize):
 def converge(population):
 
     for solution in population:
-        if fitness_function(solution) == 0:
+        if error_function(solution) == 0:
             print("Found solution!")
             return True
     
@@ -108,7 +108,7 @@ def converge(population):
 def best(population):
     bestSolutions = []
     for solution in population:
-        if fitness_function(solution) == 0:
+        if error_function(solution) == 0:
             bestSolutions += [solution]
     
     if len(bestSolutions) > 0:
@@ -116,10 +116,6 @@ def best(population):
     else:
         return [population[0]]
 
-def  fitness_function(solution: PuzzleState) -> float:
-    #TODO find a proper error_function
-    target = np.ones([solution.constraints.width, solution.constraints.height])
-    error = target - solution.get_state()
-
-    return np.mean(error ** 2)
+def  error_function(solution: PuzzleState) -> float:
+    return solution.error_2()
     
