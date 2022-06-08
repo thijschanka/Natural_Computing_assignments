@@ -3,17 +3,14 @@ import time
 
 import numpy as np
 from numpy import ndarray
+from tqdm import tqdm
 
 from project.Backtracking.PuzzleState import PuzzleState
 
 
-def error_function(particle: ndarray) -> float:
+def error_function(state: PuzzleState) -> float:
     # TODO find a proper error_function
-    target = np.ones(particle.shape)
-
-    error = target - particle
-
-    return np.mean(error ** 2)
+    return state.error_2()
 
 
 class PSOSolver:
@@ -44,11 +41,12 @@ class PSOSolver:
         self.start_time = time.perf_counter()
 
         # Run iterations
-        for i in range(iterations):
+
+        for i in tqdm(range(iterations)):
             # Calculate error for each particle
             for p in range(n_particles):
                 # Compute error
-                error = error_function(particles[p])
+                error = error_function(self.__from_representation(particles[p]))
 
                 # Update local best errors and particles
                 if error < best_local_error[p]:
@@ -70,6 +68,7 @@ class PSOSolver:
                               + alpha2 * r2 * (global_best_particle - particles[p])
 
                 particles[p] = particles[p] + velocity[p]
+
 
         self.end_time = time.perf_counter()
 
