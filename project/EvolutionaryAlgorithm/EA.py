@@ -8,17 +8,15 @@ from numpy import random
 
 iterations = 0
 def GeneticAlgorithm(constraints, populationSize):
-
+    global iterations
     population = randomSolutions(constraints, populationSize)
-    while not converge(population):
+    while not converge(population) and iterations < 10000:
         crossoverPopulation = crossover(population, constraints, populationSize)
         mutationPopulation = mutation(crossoverPopulation, constraints)
         population = select(population, mutationPopulation, populationSize)
-        global iterations
         iterations += 1
         print("Iterations = ", iterations)
         print("Best fitness:", error_function(population[0]))
-        print(population[0])
 
     return best(population)
 
@@ -62,7 +60,7 @@ def mutation(population, constraints):
     mutationPopulation = []
 
     for solution in population:
-        prob = 0.4/100
+        prob = 0.1/100
         
         for i in range(constraints.height):
             for j in range(constraints.width):
