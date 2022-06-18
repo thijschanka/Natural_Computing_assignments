@@ -44,7 +44,7 @@ class NonoGram:
 
         error_fun = lambda s: s.error_2()
 
-        self.geneticAlgorithmSolutions = GeneticAlgorithm(instance, 20)
+        self.geneticAlgorithmSolutions = GeneticAlgorithm(instance, 100)
         self.psoSolutions = PSOSolver(instance, error_fun).solve()
         
         first = True
