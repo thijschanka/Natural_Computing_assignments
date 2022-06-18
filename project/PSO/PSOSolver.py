@@ -6,7 +6,7 @@ import numpy as np
 from numpy import ndarray
 from tqdm import tqdm
 
-from project.Backtracking.PuzzleState import PuzzleState
+from Backtracking.PuzzleState import PuzzleState
 
 
 class PSOSolver:
@@ -14,16 +14,16 @@ class PSOSolver:
         self.constraints = constraints
         self.error_fun = error_fun
 
-    def solve(self, n_particles: int = 1000,
-              iterations: int = 100,
-              w: float = 0.5,
-              alpha1: float = 0.25,
-              alpha2: float = 0.25) -> ...:
+    def solve(self, n_particles: int = 4096,
+              iterations: int = 20,
+              w: float = 0.7298,
+              alpha1: float = 1.49618,
+              alpha2: float = 1.49618) -> ...:
 
         height, width = self.constraints.height, self.constraints.width
 
         # Prepare variables
-        velocity = np.random.random((n_particles, height, width))
+        velocity = np.zeros((n_particles, height, width))
 
         best_local_error = np.zeros(n_particles)
         best_local_error[:] = sys.maxsize
@@ -38,7 +38,6 @@ class PSOSolver:
         self.start_time = time.perf_counter()
 
         # Run iterations
-
         for i in tqdm(range(iterations), desc="PSO solver progress"):
             # Calculate error for each particle
             for p in range(n_particles):
