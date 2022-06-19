@@ -5,22 +5,48 @@ from Backtracking.PuzzleState import PuzzleState
 import numpy as np
 import sys
 from numpy import random
+import time
 
-iterations = 0
-def GeneticAlgorithm(constraints, populationSize):
+class EASolver:
+    def __init__(self, constraints):
+        self.constraints = constraints
+        
+        self.solved = None
+        self.end_time = None
+        self.start_time = None
+        self.used_iter = None
+        
+    def solve(self, populationSize=20, maxIter=1000):
+        results = GeneticAlgorithm(self.constraints, populationSize, maxIter)
+        
+        self.start_time = results[1]
+        self.end_time = results[2]
+        self.used_iter = results[3]
+        self.solved = results[4]
+        
+        return results[0]
+    
+    def get_metrics(self):
+        return self.start_time, self.end_time, self.used_iter, self.solved
 
+def GeneticAlgorithm(constraints, populationSize, maxIter):
+    iterations = 0
     population = randomSolutions(constraints, populationSize)
-    while not converge(population):
+    
+    start_time = time.perf_counter()
+    while not converge(population) or iterations != maxIter:
         crossoverPopulation = crossover(population, constraints, populationSize)
         mutationPopulation = mutation(crossoverPopulation, constraints)
         population = select(population, mutationPopulation, populationSize)
-        global iterations
+        # global iterations
         iterations += 1
-        print("Iterations = ", iterations)
-        print("Best fitness:", error_function(population[0]))
-        print(population[0])
+        # print("Iterations = ", iterations)
+        # print("Best fitness:", error_function(population[0]))
+        # print(population[0])
+    end_time = time.perf_counter()
+    best_pops = best(population)
 
-    return best(population)
+    return best_pops, start_time, end_time, iterations, error_function(population[0])
 
 def randomSolutions(constraints, populationSize):
     solutions = []
@@ -116,6 +142,6 @@ def best(population):
     else:
         return [population[0]]
 
-def  error_function(solution: PuzzleState) -> float:
+def error_function(solution: PuzzleState) -> float:
     return solution.error_2()
     
