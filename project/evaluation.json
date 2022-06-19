@@ -4,7 +4,7 @@
     "10x10": ["dog.json", "duck.json", "yacht.json"],
     "20x20" : ["koala.json", "radio.json", "bearcub.json"],
     "30x30" : ["007.json", "auto.json", "bird.json"],
-    "40x40" : ["eagle", "fox", "panda"],
+    "40x40" : ["eagle.json", "fox.json", "panda.json"],
     "50x50" : ["beethoven.json", "christmas.json", "angel.json"],
     "60x60" : ["church.json", "worl.json", "horse.json"],
     "70x70" : ["gladiator.json", "goldeagle.json", "grandfather.json"],
