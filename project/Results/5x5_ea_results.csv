@@ -1,0 +1,4 @@
+,task,file_name,time,error,iteration,population
+0,5x5,domino,3.3454329,2.0,40,200
+0,5x5,hourglass,3.6268709,2.0,42,200
+0,5x5,smile,3.379681700000001,2.0,43,200

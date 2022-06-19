@@ -8,7 +8,6 @@ from tqdm import tqdm
 
 from Backtracking.PuzzleState import PuzzleState
 
-
 class PSOSolver:
     def __init__(self, constraints, error_fun: Callable[[PuzzleState], float]):
         self.constraints = constraints
@@ -19,11 +18,11 @@ class PSOSolver:
         self.start_time = None
         self.used_iter = None
 
-    def solve(self, n_particles: int = 1000,
-              iterations: int = 100,
-              w: float = 0.75,
-              alpha1: float = 1.5,
-              alpha2: float = 1.5) -> ...:
+    def solve(self, n_particles: int = 4096,
+              iterations: int = 20,
+              w: float = 0.7298,
+              alpha1: float = 1.49618,
+              alpha2: float = 1.49618) -> ...:
 
         height, width = self.constraints.height, self.constraints.width
 
@@ -39,13 +38,10 @@ class PSOSolver:
 
         # Initialize particles
         particles = np.random.random((n_particles, height, width))
-        particles[particles >= 0.5] = 1
-        particles[particles < 0.5] = 0
 
         self.start_time = time.perf_counter()
 
         # Run iterations
-
         for i in tqdm(range(iterations), desc="PSO solver progress"):
             # Calculate error for each particle
             for p in range(n_particles):
@@ -63,15 +59,6 @@ class PSOSolver:
                 global_best_particle = best_local_particle[np.argmin(best_local_error)]
 
             # Update velocity and position of each particle
-            # r1 = np.random.rand(n_particles, 1, 1)
-            # r2 = np.random.rand(n_particles, 1, 1)
-
-            # velocity = w * velocity \
-            #             + alpha1 * r1 * (best_local_particle - particles) \
-            #             + alpha2 * r2 * (global_best_particle - particles)
-            
-            # particles = particles + velocity
-            
             for p in range(n_particles):
                 r1 = np.random.rand(1)
                 r2 = np.random.rand(1)
@@ -79,19 +66,8 @@ class PSOSolver:
                 velocity[p] = w * velocity[p] \
                               + alpha1 * r1 * (best_local_particle[p] - particles[p]) \
                               + alpha2 * r2 * (global_best_particle - particles[p])
-                
-                velocity[p] = 1/(1 + np.exp(-velocity[p]))
-                r_ij = np.random.uniform(size=(height, width))
-                
-                particles[particles == 1] = 2
-                particles[particles == 0] = 3
-                
-                particles[p][r_ij < velocity[p]] += 1
-                
-                particles[particles == 2] = 1
-                particles[particles == 3] = 0
-                particles[particles == 4] = 1
-                # particles[p] = particles[p] + velocity[p]
+
+                particles[p] = particles[p] + velocity[p]
 
             if global_best_error == 0:
                 self.end_time = time.perf_counter()

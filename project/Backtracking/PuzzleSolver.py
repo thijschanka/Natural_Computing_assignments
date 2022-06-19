@@ -8,6 +8,11 @@ class PuzzleSolver:
     def __init__(self, constraints):
         self.constraints = constraints
         self.permutations = Permutations(constraints)
+        
+        self.solved = None
+        self.end_time = None
+        self.start_time = None
+        self.used_iter = None
 
     def _depth_first_search(self, row):
         self.nodes += 1
@@ -36,5 +41,9 @@ class PuzzleSolver:
         self.start_time = time.perf_counter()
         self._depth_first_search(-1)
         self.end_time = time.perf_counter()
-
+        
+        self.used_iter = self.nodes + 1
         return self.solutions
+    
+    def get_metrics(self):
+        return self.start_time, self.end_time, self.used_iter, self.solved

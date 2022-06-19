@@ -136,7 +136,7 @@ class PuzzleState:
                 row.append(block)
 
             current_rows.append(row)
-
+               
         current_cols = []
         for j in range(width):
             col = []
@@ -152,8 +152,7 @@ class PuzzleState:
                 col.append(block)
 
             current_cols.append(col)
-
-        # Calculate differences
+        
         row_error = 0
         for i in range(height):
             cur = current_rows[i]

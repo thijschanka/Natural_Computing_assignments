@@ -1,0 +1,4 @@
+,task,file_name,time,iteration,n_solutions
+0,5x5,domino,0.0002474000000000087,34,1
+0,5x5,hourglass,0.00018319999999999448,17,1
+0,5x5,smile,0.0011377999999999666,187,6

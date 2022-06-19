@@ -1,0 +1,4 @@
+,task,file_name,time,error,iteration,particles
+0,5x5,domino,31.2348167,0.0,6,65536
+0,5x5,hourglass,27.3273723,0.0,5,65536
+0,5x5,smile,7.759457400000002,0.0,1,65536

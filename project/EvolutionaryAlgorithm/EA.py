@@ -34,7 +34,7 @@ def GeneticAlgorithm(constraints, populationSize, maxIter):
     population = randomSolutions(constraints, populationSize)
     
     start_time = time.perf_counter()
-    while not converge(population) or iterations != maxIter:
+    while not converge(population) and iterations != maxIter:
         crossoverPopulation = crossover(population, constraints, populationSize)
         mutationPopulation = mutation(crossoverPopulation, constraints)
         population = select(population, mutationPopulation, populationSize)
@@ -88,7 +88,7 @@ def mutation(population, constraints):
     mutationPopulation = []
 
     for solution in population:
-        prob = 0.4/100
+        prob = 0.1/100
         
         for i in range(constraints.height):
             for j in range(constraints.width):
@@ -142,6 +142,6 @@ def best(population):
     else:
         return [population[0]]
 
-def error_function(solution: PuzzleState) -> float:
+def  error_function(solution: PuzzleState) -> float:
     return solution.error_2()
     
